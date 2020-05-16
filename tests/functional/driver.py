@@ -5,10 +5,10 @@ import time
 import slacker
 import websocket
 import six
-from six.moves import _thread, range
+from six.moves import _thread
 
 
-class Driver(object):
+class Driver:
     """Functional tests driver. It handles the communication with slack api, so that
     the tests code can concentrate on higher level logic.
     """
@@ -61,9 +61,9 @@ class Driver(object):
         colon = ':' if colon else ''
         space = ' ' if space else ''
         if tobot:
-            msg = u'<@{}>{}{}{}'.format(self.testbot_userid, colon, space, msg)
+            msg = '<@{}>{}{}{}'.format(self.testbot_userid, colon, space, msg)
         elif toname:
-            msg = u'{}{}{}{}'.format(self.testbot_username, colon, space, msg)
+            msg = '{}{}{}{}'.format(self.testbot_username, colon, space, msg)
         return msg
 
     def send_direct_message(self, msg, tobot=False, colon=True):
@@ -102,9 +102,9 @@ class Driver(object):
 
     def ensure_only_specificmessage_from_bot(self, match, wait=5, tosender=False):
         if tosender is True:
-            match = six.text_type(r'^\<@{}\>: {}$').format(self.driver_userid, match)
+            match = r'^\<@{}\>: {}$'.format(self.driver_userid, match)
         else:
-            match = u'^{}$'.format(match)
+            match = '^{}$'.format(match)
 
         for _ in range(wait):
             time.sleep(1)
@@ -112,7 +112,7 @@ class Driver(object):
                 for event in self.events:
                     if self._is_bot_message(event) and re.match(match, event['text'], re.DOTALL) is None:
                         raise AssertionError(
-                            u'expected to get message matching "{}", but got message "{}"'.format(match, event['text']))
+                            'expected to get message matching "{}", but got message "{}"'.format(match, event['text']))
 
     def ensure_no_channel_reply_from_bot(self, wait=5):
         for _ in range(wait):
@@ -154,7 +154,7 @@ class Driver(object):
 
     def _has_got_message(self, channel, match, start=None, end=None):
         if channel.startswith('C'):
-            match = six.text_type(r'\<@{}\>: {}').format(self.driver_userid, match)
+            match = r'\<@{}\>: {}'.format(self.driver_userid, match)
         oldest = start or self._start_ts
         latest = end or time.time()
         func = self.slacker.channels.history if channel.startswith('C') \
@@ -167,7 +167,7 @@ class Driver(object):
 
     def _has_got_message_rtm(self, channel, match, tosender=True, thread=False):
         if tosender is True:
-            match = six.text_type(r'\<@{}\>: {}').format(self.driver_userid, match)
+            match = r'\<@{}\>: {}'.format(self.driver_userid, match)
         with self._events_lock:
             for event in self.events:
                 if 'type' not in event or \

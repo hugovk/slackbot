@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import
 import imp
 import importlib
 import logging
@@ -15,7 +13,7 @@ from slackbot.dispatcher import MessageDispatcher
 logger = logging.getLogger(__name__)
 
 
-class Bot(object):
+class Bot:
     def __init__(self):
         self._client = SlackClient(
             settings.API_TOKEN,

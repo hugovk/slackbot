@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import
 import logging
 import re
 import time
@@ -15,7 +12,7 @@ from slackbot import settings
 logger = logging.getLogger(__name__)
 
 
-class MessageDispatcher(object):
+class MessageDispatcher:
     def __init__(self, slackclient, plugins, errors_to):
         self._client = slackclient
         self._pool = WorkerPool(self.dispatch_msg)
@@ -42,7 +39,7 @@ class MessageDispatcher(object):
         category = msg[0]
         msg = msg[1]
         if not self._dispatch_msg_handler(category, msg):
-            if category == u'respond_to':
+            if category == 'respond_to':
                 if not self._dispatch_msg_handler('default_reply', msg):
                     self._default_reply(msg)
 
@@ -57,9 +54,9 @@ class MessageDispatcher(object):
                     logger.exception(
                         'failed to handle message %s with plugin "%s"',
                         msg['text'], func.__name__)
-                    reply = u'[{}] I had a problem handling "{}"\n'.format(
+                    reply = '[{}] I had a problem handling "{}"\n'.format(
                         func.__name__, msg['text'])
-                    tb = u'```\n{}\n```'.format(traceback.format_exc())
+                    tb = '```\n{}\n```'.format(traceback.format_exc())
                     if self._errors_to:
                         self._client.rtm_send_message(msg['channel'], reply)
                         self._client.rtm_send_message(self._errors_to,
@@ -74,7 +71,7 @@ class MessageDispatcher(object):
     def _on_new_message(self, msg):
         # ignore edits
         subtype = msg.get('subtype', '')
-        if subtype == u'message_changed':
+        if subtype == 'message_changed':
             return
 
         botname = self._get_bot_name()
@@ -89,7 +86,7 @@ class MessageDispatcher(object):
             else:
                 return
 
-        if username == botname or username == u'slackbot':
+        if username == botname or username == 'slackbot':
             return
 
         msg_respond_to = self.filter_text(msg)
@@ -157,16 +154,16 @@ class MessageDispatcher(object):
         default_reply = settings.DEFAULT_REPLY
         if default_reply is None:
             default_reply = [
-                u'Bad command "{}", You can ask me one of the following '
-                u'questions:\n'.format(
+                'Bad command "{}", You can ask me one of the following '
+                'questions:\n'.format(
                     msg['text']),
             ]
             default_reply += [
-                u'    • `{}` {}'.format(p.pattern, v.__doc__ or "")
+                '    • `{}` {}'.format(p.pattern, v.__doc__ or "")
                 for p, v in
-                six.iteritems(self._plugins.commands['respond_to'])]
+                self._plugins.commands['respond_to'].items()]
             # pylint: disable=redefined-variable-type
-            default_reply = u'\n'.join(default_reply)
+            default_reply = '\n'.join(default_reply)
 
         m = Message(self._client, msg)
         m.reply(default_reply)
@@ -180,14 +177,14 @@ def unicode_compact(func):
 
     @wraps(func)
     def wrapped(self, text, *a, **kw):
-        if not isinstance(text, six.text_type):
+        if not isinstance(text, str):
             text = text.decode('utf-8')
         return func(self, text, *a, **kw)
 
     return wrapped
 
 
-class Message(object):
+class Message:
     def __init__(self, slackclient, body):
         self._client = slackclient
         self._body = body
@@ -201,7 +198,7 @@ class Message(object):
 
     @unicode_compact
     def _gen_at_message(self, text):
-        text = u'<@{}>: {}'.format(self._get_user_id(), text)
+        text = '<@{}>: {}'.format(self._get_user_id(), text)
         return text
 
     @unicode_compact
@@ -316,7 +313,7 @@ class Message(object):
         return thread_ts
 
     def docs_reply(self):
-        reply = [u'    • `{}` {}'.format(v.__name__, v.__doc__ or '')
+        reply = ['    • `{}` {}'.format(v.__name__, v.__doc__ or '')
                  for _, v in
-                 six.iteritems(self._plugins.commands['respond_to'])]
-        return u'\n'.join(reply)
+                 self._plugins.commands['respond_to'].items()]
+        return '\n'.join(reply)

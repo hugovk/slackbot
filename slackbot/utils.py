@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-
 import os
 import logging
 import tempfile
 import requests
 from contextlib import contextmanager
-from six.moves import _thread, range, queue
+from six.moves import _thread, queue
 import six
 
 logger = logging.getLogger(__name__)
@@ -35,17 +33,7 @@ def to_utf8(s):
     >>> to_utf8([u'a', u'b', u'\u4f60'])
     ['a', 'b', '\\xe4\\xbd\\xa0']
     """
-    if six.PY2:
-        if isinstance(s, str):
-            return s
-        elif isinstance(s, unicode):
-            return s.encode('utf-8')
-        elif isinstance(s, (list, tuple, set)):
-            return [to_utf8(v) for v in s]
-        else:
-            return s
-    else:
-        return s
+    return s
 
 
 @contextmanager
@@ -60,7 +48,7 @@ def create_tmp_file(content=''):
         os.remove(name)
 
 
-class WorkerPool(object):
+class WorkerPool:
     def __init__(self, func, nworker=10):
         self.nworker = nworker
         self.func = func

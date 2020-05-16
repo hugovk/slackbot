@@ -1,5 +1,3 @@
-#coding: UTF-8
-
 """
 These functional tests would start a slackbot, and use the slack web api to
 drive the tests against the bot.
@@ -209,15 +207,15 @@ def test_bot_reconnect(driver):
 
 
 def test_bot_reply_with_unicode_message(driver):
-    driver.send_direct_message(u'你好')
-    driver.wait_for_bot_direct_message(u'你好')
-    driver.send_direct_message(u'你不明白，对吗？')
+    driver.send_direct_message('你好')
+    driver.wait_for_bot_direct_message('你好')
+    driver.send_direct_message('你不明白，对吗？')
     driver.wait_for_bot_direct_message('.*You can ask me.*')
 
-    driver.send_channel_message(u'你好')
-    driver.wait_for_bot_channel_message(u'你好!')
-    driver.send_channel_message(u'你不明白，对吗？')
-    driver.wait_for_bot_channel_message(u'.*You can ask me.*')
+    driver.send_channel_message('你好')
+    driver.wait_for_bot_channel_message('你好!')
+    driver.send_channel_message('你不明白，对吗？')
+    driver.wait_for_bot_channel_message('.*You can ask me.*')
 
 
 def test_bot_reply_with_alias_message(driver):

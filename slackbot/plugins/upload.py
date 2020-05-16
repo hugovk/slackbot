@@ -1,4 +1,3 @@
-# coding=utf8
 import os
 
 from slackbot.bot import respond_to
@@ -27,5 +26,5 @@ def upload(message, thing):
 def upload_content(message):
     # message.channel.upload_content(slack_filename, content,
     #                                initial_comment='')
-    content=u"你好! here's some data\nthat will appear\nas a plain text snippet"
+    content="你好! here's some data\nthat will appear\nas a plain text snippet"
     message.channel.upload_content('content.txt', content)

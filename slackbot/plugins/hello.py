@@ -1,4 +1,3 @@
-#coding: UTF-8
 import re
 from slackbot.bot import respond_to
 from slackbot.bot import listen_to
@@ -49,9 +48,9 @@ def hey(message):
     message.react('eggplant')
 
 
-@respond_to(u'你好')
+@respond_to('你好')
 def hello_unicode_message(message):
-    message.reply(u'你好!')
+    message.reply('你好!')
 
 
 @listen_to('start a thread')

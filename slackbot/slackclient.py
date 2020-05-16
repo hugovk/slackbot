@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import print_function, absolute_import
 import os
 import json
 import logging
@@ -19,7 +16,7 @@ from slackbot.utils import to_utf8, get_http_proxy
 logger = logging.getLogger(__name__)
 
 
-class SlackClient(object):
+class SlackClient:
     def __init__(self, token, timeout=None, bot_icon=None, bot_emoji=None, connect=True,
                  rtm_start_args=None):
         self.token = token
@@ -156,7 +153,7 @@ class SlackClient(object):
         return self.webapi.im.open(user_id).body["channel"]["id"]
 
     def find_channel_by_name(self, channel_name):
-        for channel_id, channel in iteritems(self.channels):
+        for channel_id, channel in self.channels.items():
             try:
                 name = channel['name']
             except KeyError:
@@ -168,7 +165,7 @@ class SlackClient(object):
         return self.users.get(user_id)
 
     def find_user_by_name(self, username):
-        for userid, user in iteritems(self.users):
+        for userid, user in self.users.items():
             if user['name'] == username:
                 return userid
 
@@ -183,7 +180,7 @@ class SlackConnectionError(Exception):
     pass
 
 
-class Channel(object):
+class Channel:
     def __init__(self, slackclient, body):
         self._body = body
         self._client = slackclient

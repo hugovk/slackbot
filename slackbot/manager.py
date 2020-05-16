@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import logging
 from glob import glob
@@ -11,7 +9,7 @@ from slackbot.utils import to_utf8
 logger = logging.getLogger(__name__)
 
 
-class PluginsManager(object):
+class PluginsManager:
     def __init__(self):
         pass
 
@@ -34,21 +32,13 @@ class PluginsManager(object):
         logger.info('loading plugin "%s"', plugin)
         path_name = None
 
-        if PY2:
-            import imp
+        from importlib.util import find_spec as importlib_find
 
-            for mod in plugin.split('.'):
-                if path_name is not None:
-                    path_name = [path_name]
-                _, path_name, _ = imp.find_module(mod, path_name)
-        else:
-            from importlib.util import find_spec as importlib_find
-
-            path_name = importlib_find(plugin)
-            try:
-                path_name = path_name.submodule_search_locations[0]
-            except TypeError:
-                path_name = path_name.origin
+        path_name = importlib_find(plugin)
+        try:
+            path_name = path_name.submodule_search_locations[0]
+        except TypeError:
+            path_name = path_name.origin
 
         module_list = [plugin]
         if not path_name.endswith('.py'):
