@@ -93,7 +93,7 @@ $ py.test
 
 If you're signed into Slack, you'll see your user account and bot account chatting with each other as the tests run.
 
-Tox is also available. If your system has Python 2.7 and 3.6 installed, installing and running tox will automatically manage the virtual Python environments and dependencies for you.
+Tox is also available. If your system has Python 3.6 installed, installing and running tox will automatically manage the virtual Python environments and dependencies for you.
 
 ### Configure Travis
 
