@@ -162,7 +162,7 @@ class MessageDispatcher(object):
                     msg['text']),
             ]
             default_reply += [
-                u'    • `{0}` {1}'.format(p.pattern, v.__doc__ or "")
+                u'    • `{}` {}'.format(p.pattern, v.__doc__ or "")
                 for p, v in
                 six.iteritems(self._plugins.commands['respond_to'])]
             # pylint: disable=redefined-variable-type
@@ -316,7 +316,7 @@ class Message(object):
         return thread_ts
 
     def docs_reply(self):
-        reply = [u'    • `{0}` {1}'.format(v.__name__, v.__doc__ or '')
+        reply = [u'    • `{}` {}'.format(v.__name__, v.__doc__ or '')
                  for _, v in
                  six.iteritems(self._plugins.commands['respond_to'])]
         return u'\n'.join(reply)

@@ -203,7 +203,7 @@ class Driver(object):
         data = ''
         while True:
             try:
-                data += '{0}\n'.format(self._websocket.recv())
+                data += '{}\n'.format(self._websocket.recv())
             except Exception:
                 return data.rstrip()
 
