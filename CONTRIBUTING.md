@@ -16,7 +16,7 @@ Most pull requests should contain only a single commit. If you have to make corr
 
 ## Developing
 
-These steps will help you prepare your development environment to work on slackbot.
+These steps will help you prepare your development environment to work on Slackbot.
 
 ### Clone the repo
 
@@ -47,7 +47,7 @@ See git documentation for info on merging, rebasing, and squashing commits.
 
 ### virtualenv/pyvenv
 
-A virtualenv allows you to install the Python packages you need to develop and run slackbot without adding a bunch of unneeded junk to your system's Python installation. Once you create the virtualenv, you need to activate it any time you're developing or running slackbot. The steps are slightly different for Python 2 and Python 3. For Python 2, run:
+A virtualenv allows you to install the Python packages you need to develop and run Slackbot without adding a bunch of unneeded junk to your system's Python installation. Once you create the virtualenv, you need to activate it any time you're developing or running Slackbot. The steps are slightly different for Python 2 and Python 3. For Python 2, run:
 
 ```
 $ virtualenv --no-site-packages .env
@@ -66,11 +66,11 @@ $ source .env/bin/activate
 $ pip install -r requirements.txt
 ```
 
-At this point, you should be able to run slackbot as described in the README.
+At this point, you should be able to run Slackbot as described in the README.
 
 ### Configure tests
 
-In order to run tests, you will need a slack instance. Create a free one at http://slack.com. Do not use an existing Slack for tests. The tests produce quite a bit of chat, and depending on how you set up Travis, it's possible for your API tokens to get leaked. Don't risk it. Use a slack created just for development and test.
+In order to run tests, you will need a Slack instance. Create a free one at http://slack.com. Do not use an existing Slack for tests. The tests produce quite a bit of chat, and depending on how you set up Travis, it's possible for your API tokens to get leaked. Don't risk it. Use a Slack created just for development and test.
 
 Create a file named `slackbot_test_settings.py` and add the following settings:
 
@@ -91,13 +91,13 @@ At this point, you should be able to run tests:
 $ py.test
 ```
 
-If you're signed into slack, you'll see your user account and bot account chatting with each other as the tests run.
+If you're signed into Slack, you'll see your user account and bot account chatting with each other as the tests run.
 
-Tox is also available. If your system has Python 2.7, 3.4, and 3.5 installed, installing and running tox will automatically manage the virtual Python environments and dependencies for you.
+Tox is also available. If your system has Python 2.7 and 3.6 installed, installing and running tox will automatically manage the virtual Python environments and dependencies for you.
 
 ### Configure Travis
 
-Log in to Travis and enable tests for your slackbot fork. Open Travis settings. You must add the following environment variables, which should correlate to settings in `slackbot_test_settings.py`:
+Log in to Travis and enable tests for your Slackbot fork. Open Travis settings. You must add the following environment variables, which should correlate to settings in `slackbot_test_settings.py`:
 
 - SLACKBOT_TESTBOT_APITOKEN
 - SLACKBOT_TESTBOT_USERNAME
@@ -106,4 +106,4 @@ Log in to Travis and enable tests for your slackbot fork. Open Travis settings. 
 - SLACKBOT_TEST_CHANNEL
 - SLACKBOT_TEST_PRIVATE_CHANNEL
 
-You must also set `Limit concurrent jobs` to `1`. If you don't, you will see false positives/failures, especially in the test cases that verify slackbot's ability to automatically reconnect on disconnection.
+You must also set `Limit concurrent jobs` to `1`. If you don't, you will see false positives/failures, especially in the test cases that verify Slackbot's ability to automatically reconnect on disconnection.
