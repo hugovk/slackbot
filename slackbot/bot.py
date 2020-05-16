@@ -3,8 +3,8 @@ import importlib
 import logging
 import re
 import time
+import _thread
 from glob import glob
-from six.moves import _thread
 from slackbot import settings
 from slackbot.manager import PluginsManager
 from slackbot.slackclient import SlackClient

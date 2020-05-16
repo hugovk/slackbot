@@ -1,10 +1,10 @@
 import os
 import logging
+import queue
 import tempfile
 import requests
+import _thread
 from contextlib import contextmanager
-from six.moves import _thread, queue
-import six
 
 logger = logging.getLogger(__name__)
 

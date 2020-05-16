@@ -1,7 +1,6 @@
 import os
 import logging
 from glob import glob
-from six import PY2
 from importlib import import_module
 from slackbot import settings
 from slackbot.utils import to_utf8

@@ -4,7 +4,6 @@ import time
 import traceback
 from functools import wraps
 
-import six
 from slackbot.manager import PluginsManager
 from slackbot.utils import WorkerPool
 from slackbot import settings

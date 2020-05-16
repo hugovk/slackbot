@@ -4,8 +4,7 @@ import re
 import time
 import slacker
 import websocket
-import six
-from six.moves import _thread
+import _thread
 
 
 class Driver:

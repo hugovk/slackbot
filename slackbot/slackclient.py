@@ -5,7 +5,6 @@ import time
 from ssl import SSLError
 
 import slacker
-from six import iteritems
 
 from websocket import (
     create_connection, WebSocketException, WebSocketConnectionClosedException
